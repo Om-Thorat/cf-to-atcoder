@@ -2,15 +2,17 @@
   let m = 0.6334027;
   let c = 856.05180115;
   let cf = 1200;
-  let at = (cf - c) / m;
-  $: {
-    if (cf !== 0) {
-      at = Math.round((cf - c) / m);
-    } else if (at !== 0) {
+  let at = 543;
+
+  function updateCF() {
+    if (at !== 0) {
       cf = Math.round(at * m + c);
     }
-    if(at<0){
-      at = 0;
+  }
+
+  function updateAT() {
+    if (cf !== 0) {
+      at = Math.round((cf - c) / m);
     }
   }
 </script>
@@ -26,7 +28,7 @@
         </div>
         <label class=" input input-bordered flex items-center gap-2">
           Rating
-          <input bind:value={cf} type="number" class="grow" placeholder="rating" />
+          <input bind:value={cf} on:keyup={updateAT} type="number" class="grow" placeholder="rating" />
         </label>
         <div class="pb-5"></div>
     </div>
@@ -40,7 +42,7 @@
       </div>
       <label class=" input input-bordered flex items-center gap-2 bg-slate-300">
         Rating
-        <input bind:value={at} type="number" class="grow" placeholder="rating" />
+        <input bind:value={at} on:keyup={updateCF} type="number" class="grow" placeholder="rating" />
       </label>
       <div class="pb-5"></div>
   </div>
